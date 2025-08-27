@@ -1,0 +1,46 @@
+<div class="container2">
+    <div id="menu">
+        <div class="dropdown">
+            <button class="btn_menu" type="button" onclick="backProject()">
+                Назад к проектам
+            </button>
+        </div>
+        <div class="dropdown">
+            <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Пользователь: {{user}}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <form action="/logout" method="post">
+                        <button class="dropdown-item" type="submit">Выйти</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="tabs"></div>
+
+
+    <div class="rightbar2">
+        <div class="reportTask" onclick="report_task()">
+            <h5>Отчет по задачам</h5>
+        </div>
+        <div class="reportProject" onclick="report_total()">
+            <h5>Отчет по проекту</h5>
+        </div>
+        <div class="reportProjectAll">
+            <h5 id="rPA1">Отчет по ПИ</h5>
+            <select id="smetas" multiple></select>
+            <button onclick="createAllProject()" id="rPA3" >Выбрать проекты...</button>
+            <button onclick="report_total_all()" id="rPA4" >Создать отчет</button>
+        </div>
+    </div>
+    <div class="reports" id="reports">
+
+    </div>
+    <script src="/js/report.js"></script>
+    <script src="/js/_db.js"></script>
+    <script src="/js/_stadia.js"></script>
+
+</div>
