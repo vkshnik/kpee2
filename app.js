@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-app.set('port', process.env.PORT || 3003);
+app.set('port', process.env.PORT || 8000);
 
 
 // First step is the authentication of the client
