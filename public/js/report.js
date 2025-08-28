@@ -685,8 +685,8 @@ function report_total() {
         /* START INSERT FOOTER*/
         footer = '';
         if (arr.length === 0) {
-            footer = `<tr style="background-color: lightgreen;>
-            <td colspan=2 ">Итого по дисциплине</td>
+            footer = `<tr style="background-color: lightgreen;">
+            <td colspan=2 >Итого по дисциплине</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>

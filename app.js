@@ -1,10 +1,12 @@
 const { text } = require('body-parser');
 var express = require('express');
+var session = require('express-session');
 const cookieParser = require('cookie-parser');
 var app = express();
-//var sqlite3 = require('sqlite3');
 var Database = require('better-sqlite3');
-//const db = new sqlite3.Database('projects.db');
+const  SqliteStore  =  require ( "better-sqlite3-session-store" ) ( session );
+const  sess  =  new  Database ( "sessions.db" /*,  {  verbose : console . log  } */) ;
+
 const db = new Database('projects.db');
 var fs = require('fs');
 var us = require('./users');
@@ -26,9 +28,15 @@ app.set('port', process.env.PORT || 8000);
 
 
 // First step is the authentication of the client
-
+app.use ( session ( { 
+  store : new SqliteStore ( { client : sess , expired : { clear : true , intervalMs : 900000  } } ) , 
+  secret : " keyboard cat " , 
+  resave : false , 
+  saveUninitialized: false,
+  
+} ) )
 app.use(express.static(__dirname + '/public'));
-app.use(cookieParser());
+//app.use(cookieParser());
 
 db.exec("CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT NOT NULL, nameProject TEXT NOT NULL, dataProject BLOB NOT NULL, dateProject TEXT NOT NULL)");
 
@@ -39,10 +47,10 @@ function checkAuth() {
   for (let i = 0; i < us.length; i++) {
     if (user == us[i].username && pass == us[i].password) {
       role = us[i].role;
+      
       return true
     }
   }
-
 
 }
 app.get('/login', function (req, res, next) {
@@ -51,8 +59,13 @@ app.get('/login', function (req, res, next) {
 });
 
 app.post('/login', function (req, res, next) {
-  user = req.body.username;
-  pass = req.body.password;
+  req.session.user = req.body.username;
+  req.session.pass =  req.body.password;
+  user = req.session.user;
+  pass = req.session.pass;
+
+  
+
   checkAuth();
   res.redirect('/');
 });
@@ -186,7 +199,7 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/reports', function (req, res) {
-  if (role == 'admin') {
+  if (role == 'admin' || role == 'gip') {
     res.render('reports', {
       user: user,
 
@@ -207,7 +220,7 @@ app.post('/logout', function (req, res, next) {
   a = '';
   b = '';
   c = '';
-  res.clearCookie("kpee");
+  //res.clearCookie("kpee");
   res.redirect('/login')
 });
 
