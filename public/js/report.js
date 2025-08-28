@@ -691,7 +691,6 @@ function report_total() {
             <td>-</td>
             <td>-</td>
             <td>-</td>
-            <td>-</td>
             <td>-</td>`;
 
             for (let k = 0; k <= numYear; k++) {

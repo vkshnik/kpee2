@@ -221,7 +221,14 @@ app.post('/logout', function (req, res, next) {
   b = '';
   c = '';
   //res.clearCookie("kpee");
-  res.redirect('/login')
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.redirect('/login');
+    }
+  });
+ // res.redirect('/')
 });
 
 
