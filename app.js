@@ -116,7 +116,7 @@ app.get('/', function (req, res, next) {
     myGip += `
     <div class="recPros" id=${row.id}>
       <div>
-      <div><button id=${row.id} class='open'>open</button> </div>
+          <div><button><img src = '/open.svg' id=${row.id} class='open'></button></div>
       </div>
       <div> ${row.nameProject}</div>
       <div> ${row.user}</div>
