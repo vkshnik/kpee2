@@ -99,6 +99,7 @@
     gap: 5px;
     padding: 5px;
 }
+
 .modal1_data button {
     border-radius: 5px;
 }
@@ -217,7 +218,7 @@
     background-color: lightgrey;
     border: 1px solid;
     text-align: center;
-    
+
 }
 
 .cell_header {
@@ -240,29 +241,87 @@
 }
 
 .projectInfo {
-
-    margin: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 
 }
 
+.projectInfo h5 {
+    text-align: center;
+}
 .projectInfoCard {
-    padding: 5px;
     border: 1px solid;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    border-radius: 5px;
+    padding-top: 10px; 
 }
-.recPros {
-    border: 1px solid;
-    border-radius: 10px;
-    padding: 5px;
-    margin: 10px;
+.projectInfoCard div {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr ;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    text-align: center;
+    margin: 0 10px 0 10px;
     
 }
+
+.projectInfoCard div h6:nth-child(odd) {
+    background-color: lightblue;
+    text-align: left;
+}
+
+.projectInfoCard div h6:nth-child(even) {
+    background-color: white;
+    font-style: italic;
+    text-align: center;
+}
+
+.recentProject1 {
+    border: 1px solid;
+    border-radius: 5px; 
+    padding-top: 10px;  
+}
+
+.recentProject h5 {
+    text-align: center;
+ 
+}
+
+.recentProjectHeader {
+
+    padding: 5px;
+    margin: 0 10px 0 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    background-color: lightblue;
+}
+
+
+
+
+.recPros {
+    margin: 10px 10px 10px 10px;
+    padding: 5px;
+    font-style: italic;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+}
+
+.recPros div {
+    white-space: wrap;
+    padding: 0 5px 0 5px;
+    
+}
+
+.recPros:nth-child(even) {
+    background-color: silver;
+    
+}
+
+.recPros:nth-child(odd) {
+    background-color: lightgrey;
+}
+
 .recPros button {
     border-radius: 5px;
+    width: 40px;
+    
 
 }

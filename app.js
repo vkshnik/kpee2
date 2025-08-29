@@ -4,8 +4,8 @@ var session = require('express-session');
 const cookieParser = require('cookie-parser');
 var app = express();
 var Database = require('better-sqlite3');
-const  SqliteStore  =  require ( "better-sqlite3-session-store" ) ( session );
-const  sess  =  new  Database ( "sessions.db" /*,  {  verbose : console . log  } */) ;
+const SqliteStore = require("better-sqlite3-session-store")(session);
+const sess = new Database("sessions.db" /*,  {  verbose : console . log  } */);
 
 const db = new Database('projects.db');
 var fs = require('fs');
@@ -28,29 +28,20 @@ app.set('port', process.env.PORT || 8000);
 
 
 // First step is the authentication of the client
-app.use ( session ( { 
-  store : new SqliteStore ( { client : sess , expired : { clear : true , intervalMs : 900000  } } ) , 
-  secret : " keyboard cat " , 
-  resave : false , 
+app.use(session({
+  store: new SqliteStore({ client: sess, expired: { clear: true, intervalMs: 900000 } }),
+  secret: " keyboard cat ",
+  resave: false,
   saveUninitialized: false,
-  
-} ) )
+
+}))
 app.use(express.static(__dirname + '/public'));
 //app.use(cookieParser());
 
 db.exec("CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT NOT NULL, nameProject TEXT NOT NULL, dataProject BLOB NOT NULL, dateProject TEXT NOT NULL)");
 
-let user = '';
-let pass = '';
-let role = '';
-function checkAuth() {
-  for (let i = 0; i < us.length; i++) {
-    if (user == us[i].username && pass == us[i].password) {
-      role = us[i].role;
-      
-      return true
-    }
-  }
+function checkAuth(req) {
+
 
 }
 app.get('/login', function (req, res, next) {
@@ -60,23 +51,35 @@ app.get('/login', function (req, res, next) {
 
 app.post('/login', function (req, res, next) {
   req.session.user = req.body.username;
-  req.session.pass =  req.body.password;
-  user = req.session.user;
-  pass = req.session.pass;
+  req.session.pass = req.body.password;
 
-  
+  for (let i = 0; i < us.length; i++) {
+    if (req.session.user == us[i].username && req.session.pass == us[i].password) {
+      req.session.role = us[i].role;
 
-  checkAuth();
-  res.redirect('/');
+
+    }
+  }
+  //console.log(req.session)
+  if (req.session.role) {
+    res.redirect('/');
+  }
+  else {
+    res.render('login', {
+      msg: 'Неверный логин или пароль'
+    });
+  }
+
 });
 
 
 
 function auth(req, res, next) {
-  if (checkAuth()) {
+  if (req.session.role) {
     next()
   }
   else {
+
     res.redirect('/login');
   }
 }
@@ -90,41 +93,44 @@ app.get('/', function (req, res, next) {
   let myGip = '';
 
 
-  //const rows = db.prepare("SELECT * FROM projects WHERE user = ?").all(user);
+  //const rows = db.prepare("SELECT * FROM projects WHERE user = ?").all(req.session.user);
   const rows = db.prepare("SELECT * FROM projects ").all();
 
   rows.forEach(function (row) {
+    
+
     myAdmin += `
+   
     <div class="recPros" id=${row.id}>
-      <div>Имя</div>
-      <div>Автор</div>
-      <div>Посл. изм.</div>
+      <div> 
+          <div><button><img src = '/open.svg' id=${row.id} class='open'></button></div>
+          <div> <form action="/delete/${row.id}" method="get"><button type="submit"><img src = '/delete.svg'</button></form></div>
+      </div>
       <div> ${row.nameProject}</div>
       <div> ${row.user}</div>
       <div> ${new Date(row.dateProject).toLocaleDateString('ru')} <br> ${new Date(row.dateProject).toLocaleTimeString('ru')}</div>
-      <div><button id=${row.id} class='open'>open</button> </div>
-      <div> <form action="/delete/${row.id}" method="get"><button type="submit">delete</button></form></div>
+      
     </div>
     `
       ;
     myGip += `
     <div class="recPros" id=${row.id}>
-      <div>Имя</div>
-      <div>Автор</div>
-      <div>Посл. изм.</div>
+      <div>
+      <div><button id=${row.id} class='open'>open</button> </div>
+      </div>
       <div> ${row.nameProject}</div>
       <div> ${row.user}</div>
       <div> ${new Date(row.dateProject).toLocaleDateString('ru')} <br> ${new Date(row.dateProject).toLocaleTimeString('ru')}</div>
-      <div><button id=${row.id} class='open'>open</button> </div>
+      
     </div>
     `
       ;
 
 
   });
-  if (role == 'admin') {
+  if (req.session.role == 'admin') {
     res.render('index', {
-      user: user,
+      user: req.session.user,
       projects: `
         <div class="dropdown">
       <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -150,15 +156,15 @@ app.get('/', function (req, res, next) {
         </li>
         </ul>
         </div>`,
-      
+
       pro: myAdmin,
 
 
     });
   }
-  else if (role == 'gip') {
+  else if (req.session.role == 'gip') {
     res.render('index', {
-      user: user,
+      user: req.session.user,
       projects: `
         <div class="dropdown">
       <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -187,9 +193,9 @@ app.get('/', function (req, res, next) {
       pro: myGip
     })
   }
-  else if (role == 'user') {
+  else if (req.session.role == 'user') {
     res.render('index', {
-      user: user,
+      user: req.session.user,
       pro: myGip
     })
 
@@ -199,9 +205,9 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/reports', function (req, res) {
-  if (role == 'admin' || role == 'gip') {
+  if (req.session.role == 'admin' || req.session.role == 'gip') {
     res.render('reports', {
-      user: user,
+      user: req.session.user,
 
     });
   }
@@ -221,14 +227,14 @@ app.post('/logout', function (req, res, next) {
   b = '';
   c = '';
   //res.clearCookie("kpee");
-  req.session.destroy(function(err) {
-    if(err) {
+  req.session.destroy(function (err) {
+    if (err) {
       console.log(err);
     } else {
       res.redirect('/login');
     }
   });
- // res.redirect('/')
+  // res.redirect('/')
 });
 
 
@@ -243,7 +249,7 @@ app.post('/project/add', (req, res) => {
   const rows = db.prepare("SELECT * FROM projects WHERE nameProject = ?").get(nameProject);
 
   if (rows == undefined) {
-    db.prepare("INSERT INTO projects (user, nameProject, dataProject, dateProject) VALUES (?,?,?,?)").run([user, nameProject, dataProject, dateProject]);
+    db.prepare("INSERT INTO projects (user, nameProject, dataProject, dateProject) VALUES (?,?,?,?)").run([req.session.user, nameProject, dataProject, dateProject]);
   }
   else {
     db.prepare("UPDATE projects SET dataProject = ?,  dateProject = ? WHERE nameProject = ?").run(dataProject, dateProject, nameProject);

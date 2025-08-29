@@ -69,34 +69,55 @@
 
   <div class="rightbar">
     <div class="projectInfo">
-      <h3>Карточка проекта</h3>
+      <h5>Карточка проекта</h5>
       <div class="projectInfoCard">
-        <h6>Наименование проекта</h6>
-        <p id="_nameProject"></p>
-        <h6>Дата начала</h6>
-        <p id="_start"></p>
-        <h6>Дата окончания</h6>
-        <p id="_end"></p>
-        <h6>Количество спринтов</h6>
-        <p id="sprint"></p>
-        <h6>Количество дней</h6>
-        <p id="time"></p>
-        <h6>Стадия проекта</h6>
-        <p id="_stadia"></p>
-        <h6>ГИП</h6>
-        <p id="_author"></p>
+        <div>
+          <h6>Наименование проекта</h6>
+          <h6 id="_nameProject"></h6>
+        </div>
+        <div>
+          <h6>Дата начала</h6>
+          <h6 id="_start"></h6>
+        </div>
+        <div>
+          <h6>Дата окончания</h6>
+          <h6 id="_end"></h6>
+        </div>
+        <div>
+          <h6>Количество спринтов</h6>
+          <h6 id="sprint"></h6>
+        </div>
+        <div>
+          <h6>Количество дней</h6>
+          <h6 id="time"></h6>
+        </div>
+        <div>
+          <h6>Стадия проекта</h6>
+          <h6 id="_stadia"></h6>
+        </div>
+        <div>
+          <h6>ГИП</h6>
+          <h6 id="_author"></h6>
+        </div>
+
       </div>
     </div>
     <div class="recentProject">
-      <h3>Последние проекты</h3>
-      <div id="recentProject">
+      <h5>Последние проекты</h5>
+      <div id="recentProject" class="recentProject1">
+        <div class="recentProjectHeader">
+          <div></div>
+          <div>Имя</div>
+          <div>Автор</div>
+          <div >Изм.</div>
+        </div>
         {{{pro}}}
       </div>
     </div>
 
   </div>
   <div class="matrix" id="matrix">
-    <h3 style="text-align:center">Матрица проекта</h3>
+    <h5 style="text-align:center">Матрица проекта</h5>
     <div id="main"></div>
     <div class="modal1">
       <div class="modal1_name">

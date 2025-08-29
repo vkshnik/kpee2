@@ -1,10 +1,10 @@
  const USERS = [
     {username: 'admin',
-        password: ' ',
+        password: 'Adidas',
         role: 'admin'
     },
      {username: 'gip1',
-        password: ' ',
+        password: '54321',
         role: 'gip'
     },
     {username: 'user1',
