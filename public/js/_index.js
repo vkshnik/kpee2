@@ -9,7 +9,7 @@ function createTab() {
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.key(i).includes('.kpee')) {
             l += `<div class ="pag"><input type="checkbox" class = "chooseFile" id = "${localStorage.key(i)}" value = "${localStorage.key(i)}" >
-        <label for="${localStorage.key(i)}">${localStorage.key(i)}</label>
+        <label class ="pag2"  for="${localStorage.key(i)}">${localStorage.key(i)}</label>
         <input type="button" class = "btnclose" onclick = "closeFile()"  value="&#x2715" ></div>`
         }
     }
@@ -26,7 +26,7 @@ function recentTab() {
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.key(i).includes('.kpee')) {
             l += `<a class ="pag1">
-        <label for="${localStorage.key(i)}">${localStorage.key(i)}</label>
+        <label  for="${localStorage.key(i)}">${localStorage.key(i)}</label>
         </a><br>`
         }
     }

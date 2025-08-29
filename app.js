@@ -106,7 +106,7 @@ app.get('/', function (req, res, next) {
           <div><button><img src = '/open.svg' id=${row.id} class='open'></button></div>
           <div> <form action="/delete/${row.id}" method="get"><button type="submit"><img src = '/delete.svg'</button></form></div>
       </div>
-      <div> ${row.nameProject}</div>
+      <div class = "clipText"> ${row.nameProject}</div>
       <div> ${row.user}</div>
       <div> ${new Date(row.dateProject).toLocaleDateString('ru')} <br> ${new Date(row.dateProject).toLocaleTimeString('ru')}</div>
       
@@ -118,7 +118,7 @@ app.get('/', function (req, res, next) {
       <div>
           <div><button><img src = '/open.svg' id=${row.id} class='open'></button></div>
       </div>
-      <div> ${row.nameProject}</div>
+      <div class = "clipText"> ${row.nameProject}</div>
       <div> ${row.user}</div>
       <div> ${new Date(row.dateProject).toLocaleDateString('ru')} <br> ${new Date(row.dateProject).toLocaleTimeString('ru')}</div>
       

@@ -43,20 +43,32 @@
 
 .pag {
     float: inline-start;
-    height: 30px;
-    padding: 5px;
+    height: 40px;
+    padding-left: 5px;
     white-space: nowrap;
     overflow: hidden;
     border-radius: 5px;
-    background-color: #f8f9fa;
+    background-color: lightblue;
     margin-right: 5px;
 
+}
+
+.btnclose {
+    background-color: lightblue;
 }
 
 .pag1 {
     padding: 10px;
     margin-right: 5px;
 
+}
+
+.pag2 {
+
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pag input {
@@ -249,17 +261,19 @@
 .projectInfo h5 {
     text-align: center;
 }
+
 .projectInfoCard {
     border: 1px solid;
     border-radius: 5px;
-    padding-top: 10px; 
+    padding-top: 10px;
 }
+
 .projectInfoCard div {
     display: grid;
     grid-template-rows: auto;
     text-align: center;
     margin: 0 10px 0 10px;
-    
+
 }
 
 .projectInfoCard div h6:nth-child(odd) {
@@ -275,13 +289,13 @@
 
 .recentProject1 {
     border: 1px solid;
-    border-radius: 5px; 
-    padding-top: 10px;  
+    border-radius: 5px;
+    padding-top: 10px;
 }
 
 .recentProject h5 {
     text-align: center;
- 
+
 }
 
 .recentProjectHeader {
@@ -307,12 +321,13 @@
 .recPros div {
     white-space: wrap;
     padding: 0 5px 0 5px;
-    
+    text-overflow: ellipsis;
+
 }
 
 .recPros:nth-child(even) {
     background-color: silver;
-    
+
 }
 
 .recPros:nth-child(odd) {
@@ -322,6 +337,11 @@
 .recPros button {
     border-radius: 5px;
     width: 40px;
-    
 
+
+}
+
+.clipText {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
