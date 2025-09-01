@@ -1,0 +1,348 @@
+.container1 {
+    display: grid;
+    grid-template-areas:
+        "menu menu "
+        "tabs tabs "
+        "rightbar matrix "
+    ;
+
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 4fr;
+    margin: 0 20px 0 20px;
+    gap: 10px;
+    height: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+
+
+
+}
+
+#menu {
+    grid-area: menu;
+}
+
+#tabs {
+    grid-area: tabs;
+    margin-left: 10px;
+}
+
+.rightbar {
+    grid-area: rightbar;
+
+}
+
+
+
+.matrix {
+    grid-area: matrix;
+
+}
+
+
+
+.pag {
+    float: inline-start;
+    height: 40px;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: lightblue;
+    margin-right: 5px;
+
+}
+
+.btnclose {
+    background-color: lightblue;
+}
+
+.pag1 {
+    padding: 10px;
+    margin-right: 5px;
+
+}
+
+.pag2 {
+
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pag input {
+    border: 0;
+}
+
+
+.modal1 {
+    width: 450px;
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    background-color: lightblue;
+    display: none;
+    border: 0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 10px 6px rgba(152, 187, 215, 0.7);
+
+
+}
+
+.modal1_name {
+    width: 100%;
+
+    border: 1px solid white;
+}
+
+.modal1_name input {
+    width: 100%;
+    height: 50px;
+    margin-left: 5px;
+
+}
+
+.modal1_data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid white;
+    gap: 5px;
+    padding: 5px;
+}
+
+.modal1_data button {
+    border-radius: 5px;
+}
+
+
+.nav {
+    padding: 5px;
+    border: 1px solid lightblue;
+
+}
+
+#ctxmenu {
+    display: none;
+    width: 300px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 0 10px 0;
+    border: 0;
+    box-shadow: 0 10px 6px rgba(139, 139, 130, 0.7);
+
+}
+
+
+.ctxbutton {
+    width: 100%;
+    border: 0;
+    background-color: white;
+    text-align: left;
+    padding-left: 20px;
+
+}
+
+.ctxbutton:hover {
+    background-color: lightgrey;
+
+}
+
+#main,
+#total1 {
+    display: grid;
+
+}
+
+.card1 {
+    width: 30px;
+    height: 30px;
+
+    text-align: center;
+    margin: 10px;
+    border-radius: 15px;
+    box-shadow: 6px 6px 6px rgba(152, 187, 215, 0.7);
+
+}
+
+.card_info {
+    width: 450px;
+    background-color: lightblue;
+    position: absolute;
+    border-radius: 10px;
+    z-index: 3;
+    padding: 10px;
+    display: grid;
+    gap: 10px;
+    box-shadow: 0 10px 6px rgba(152, 187, 215, 0.7);
+    border: 0;
+
+
+}
+
+.task textarea {
+    width: 100%;
+    padding: 5px;
+
+
+}
+
+.task,
+.doers,
+.duration {
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.doers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    padding: 20px;
+}
+
+.duration {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    padding: 20px;
+}
+
+.btnTask {
+    padding-left: 20px;
+}
+
+.card_info button {
+    border-radius: 5px;
+    background-color: #e2e6ea;
+}
+
+.cell {
+    border: 1px solid lightgrey;
+}
+
+.cell_sprint {
+    padding-left: 10px;
+    background-color: lightgrey;
+    border: 1px solid;
+    text-align: center;
+
+}
+
+.cell_header {
+    text-align: center;
+    background-color: lightblue;
+    border: 1px solid;
+}
+
+.cell_sprint_tot,
+.cell_total {
+    text-align: center;
+    background-color: lightgrey;
+    border: 1px solid;
+}
+
+#main {
+    border: 0;
+    gap: 1px;
+
+}
+
+.projectInfo {
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+}
+
+.projectInfo h5 {
+    text-align: center;
+}
+
+.projectInfoCard {
+    border: 1px solid;
+    border-radius: 5px;
+    padding-top: 10px;
+}
+
+.projectInfoCard div {
+    display: grid;
+    grid-template-rows: auto;
+    text-align: center;
+    margin: 0 10px 0 10px;
+
+}
+
+.projectInfoCard div h6:nth-child(odd) {
+    background-color: lightblue;
+    text-align: left;
+}
+
+.projectInfoCard div h6:nth-child(even) {
+    background-color: white;
+    font-style: italic;
+    text-align: center;
+}
+
+.recentProject1 {
+    border: 1px solid;
+    border-radius: 5px;
+    padding-top: 10px;
+}
+
+.recentProject h5 {
+    text-align: center;
+
+}
+
+.recentProjectHeader {
+
+    padding: 5px;
+    margin: 0 10px 0 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    background-color: lightblue;
+}
+
+
+
+
+.recPros {
+    margin: 10px 10px 10px 10px;
+    padding: 5px;
+    font-style: italic;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+}
+
+.recPros div {
+    white-space: wrap;
+    padding: 0 5px 0 5px;
+    text-overflow: ellipsis;
+
+}
+
+.recPros:nth-child(even) {
+    background-color: silver;
+
+}
+
+.recPros:nth-child(odd) {
+    background-color: lightgrey;
+}
+
+.recPros button {
+    border-radius: 5px;
+    width: 40px;
+
+
+}
+
+.clipText {
+    min-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

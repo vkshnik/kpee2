@@ -1,0 +1,165 @@
+.container2 {
+    display: grid;
+    grid-template-areas:
+        "menu menu "
+        "tabs tabs "
+        "rightbar2 reports "
+    ;
+
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 4fr;
+    margin: 0 20px 0 20px;
+    gap: 10px;
+    height: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+#menu {
+    grid-area: menu;
+}
+
+#tabs {
+    grid-area: tabs;
+    margin-left: 10px;
+}
+
+.rightbar2 {
+    grid-area: rightbar2;
+
+}
+
+
+
+.reports {
+    grid-area: reports;
+
+}
+
+.reportTask {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.reportProject {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.reportProjectAll {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 10px;
+    display: grid;
+    grid-template:
+        "a  a"
+        "b  c"
+        "b  d";
+    gap: 5px;
+    grid-template-rows: auto;
+    grid-template-columns: 3fr 2fr;
+
+}
+
+#rPA1 {
+    grid-area: a;
+}
+
+#smetas {
+    grid-area: b;
+}
+
+#rPA3 {
+    grid-area: c;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    background-color: white;
+}
+
+#rPA4 {
+    grid-area: d;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    background-color: white;
+
+}
+
+.reportTask:hover,
+.reportProject:hover,
+.reportProjectAll:hover {
+    margin: 5px;
+    background-color: lightgrey;
+}
+
+.reports {
+    overflow: scroll;
+    background-color: lightgrey;
+    border: 3px double lightblue;
+    padding: 20px;
+    border-radius: 10px;
+
+
+}
+
+
+
+.report {
+    margin-top: 50px;
+    z-index: 9999;
+    padding: 50px;
+    background-color: white;
+    height: max-content;
+    overflow: auto;
+    border: 1px dashed;
+    width: fit-content;
+}
+
+.report table {
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.report table tr th {
+    border: 1px solid;
+    padding: 10px;
+    font-size: 10pt;
+    width: 100px;
+    text-align: center;
+    background-color: lightgrey;
+
+}
+
+.report table tr td {
+    border: 1px solid;
+    padding: 10px;
+    font-size: 10pt;
+    width: 100px;
+    text-align: center;
+
+}
+
+.report_close {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    text-align: center;
+    float: left;
+    border: 1px solid lightgrey;
+    border-radius: 20px;
+    background-color: white;
+    color: red;
+
+}
+
+.report_close:hover {
+    box-shadow: 4px 4px 6px rgba(152, 187, 215, 0.7);
+
+}

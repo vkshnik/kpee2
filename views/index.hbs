@@ -1,0 +1,158 @@
+<div class="container1">
+  <div id="menu">
+    {{!-- <div class="dropdown">
+      <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Проекты
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+        <li><input class="dropdown-item" id="555" type="button" onclick="createFile()" value="Создать проект"></li>
+        <li><input class="dropdown-item" id="666" type="button" onclick="uploadFile()" value="Сохранить проект"> </li>
+        <li><label for="777" class="dropdown-item" hidden>Открыть проект</label><input class="form-control" id="777"
+            type="file" onclick="openFile1()" accept=".smeta" hidden></li>
+      </ul>
+    </div>--}}
+
+    {{!-- <div class="dropdown">
+      <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+        disabled>
+        Управление
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><input class="dropdown-item" id="" type="button" onclick="" value="***********"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="" value="***********"> </li>
+      </ul>
+    </div> --}}
+
+    {{!-- <div class="dropdown">
+      <button class="btn_menu" type="button" onclick="forwardReports()">
+        Отчеты
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><input class="dropdown-item" id="" type="button" onclick="report_task()" value="Отчет по задачам"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="report_total()" value="Отчет по проекту"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="report_total_all()" value="Сводный отчет по ПИ">
+        </li>
+
+      </ul>
+    </div> --}}
+
+    {{!-- <div class="dropdown">
+      <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+        disabled>
+        Справка
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><input class="dropdown-item" id="" type="button" onclick="" value="***********"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="" value="***********">
+        </li>
+      </ul>
+    </div> --}}
+    {{{projects}}}
+
+    {{{report}}}
+    <div class="dropdown">
+      <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Пользователь: {{user}}
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li>
+          <form action="/logout" method="post">
+            <button class="dropdown-item" type="submit">Выйти</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="tabs"></div>
+
+
+  <div class="rightbar">
+    <div class="projectInfo">
+      <h5>Карточка проекта</h5>
+      <div class="projectInfoCard">
+        <div>
+          <h6>Наименование проекта</h6>
+          <h6 class = "clipText" id="_nameProject"></h6>
+        </div>
+        <div>
+          <h6>Дата начала</h6>
+          <h6 id="_start"></h6>
+        </div>
+        <div>
+          <h6>Дата окончания</h6>
+          <h6 id="_end"></h6>
+        </div>
+        <div>
+          <h6>Количество спринтов</h6>
+          <h6 id="sprint"></h6>
+        </div>
+        <div>
+          <h6>Количество дней</h6>
+          <h6 id="time"></h6>
+        </div>
+        <div>
+          <h6>Стадия проекта</h6>
+          <h6 id="_stadia"></h6>
+        </div>
+        <div>
+          <h6>ГИП</h6>
+          <h6 id="_author"></h6>
+        </div>
+
+      </div>
+    </div>
+    <div class="recentProject">
+      <h5>Последние проекты</h5>
+      <div id="recentProject" class="recentProject1">
+        <div class="recentProjectHeader">
+          <div></div>
+          <div>Имя</div>
+          <div>Автор</div>
+          <div >Изм.</div>
+        </div>
+        {{{pro}}}
+      </div>
+    </div>
+
+  </div>
+  <div class="matrix" id="matrix">
+    <h5 style="text-align:center">Матрица проекта</h5>
+    <div id="main"></div>
+    <div class="modal1">
+      <div class="modal1_name">
+        <input id="nameProject" type="text" placeholder="Введите наименование проекта" required>
+      </div>
+      <div class="modal1_data">
+        <p>Дата начала</p>
+        <input id="countStart" type="date" value="2025-01-01">
+        <p>Дата окончания</p>
+        <input id="countEnd" type="date" value="2025-02-01">
+        <p>Стадия проектирования</p>
+        <select id="stadia">
+          <option>ОТР</option>
+          <option>ПД</option>
+          <option>ПД линейный</option>
+          <option>РД</option>
+        </select>
+        <p>ГИП</p>
+        <input id="author" type="text" required>
+        <button id='btnProject'>Создать</button>
+        <button id='btnProject_close'>Отмена</button>
+      </div>
+    </div>
+    <div id="ctxmenu">
+      <button class="ctxbutton" id="task">Создать задачу</button>
+      <br>
+      <button class="ctxbutton" id="edittask">Редактировать задачу</button>
+      <br>
+      <button class="ctxbutton" id="deletetask" disabled>Удалить задачу</button>
+    </div>
+
+
+  </div>
+  <script src="/js/_index.js"></script>
+  <script src="/js/_db.js"></script>
+  <script src="/js/_stadia.js"></script>
+
+</div>
