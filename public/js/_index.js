@@ -450,7 +450,7 @@ document.addEventListener("contextmenu", (e) => {
     }
     else {
 
-        //e.preventDefault();
+        e.preventDefault();
         let _card;
         let _card_id;
         let data = {}
