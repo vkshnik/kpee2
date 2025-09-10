@@ -178,13 +178,13 @@ function changeTab() {
 
 }
 
-function saveFile() {
+function saveLocalFile() {
     let filename = document.querySelectorAll('input[type="checkbox"]:checked[class="chooseFile"]')[0].value;
     let data = localStorage.getItem(filename);
-    //download(data, filename)
+    download(data, filename)
 }
 
-/*function openFile() {
+function openLocalFile() {
 
     document.getElementById('777').addEventListener('change', () => {
 
@@ -201,7 +201,7 @@ function saveFile() {
         reader.readAsText(document.getElementById('777').files[0]);
 
         reader.onload = () => {
-            if (reader.result.includes("]")) {
+            if (reader.result.includes("stadia")) {
                 localStorage.setItem(document.getElementById('777').files[0].name, reader.result)
             }
             else {
@@ -210,12 +210,12 @@ function saveFile() {
             }
         }
 
-        //window.location.reload();
+        window.location.reload();
 
 
 
     })
-}*/
+}
 
 
 
@@ -349,7 +349,7 @@ function fill() {
         count += `<div class="cell_sprint" >СПРИНТ ${j} <br> 
         ${start}- <br>${end} </div>`
         for (let i = 1; i < STAGE.length - 1; i++) {
-            count += `<div class="cell" id = "cell${i}${j}" ></div>`
+            count += `<div class="cell" id = "cell_${i}_${j}" ></div>`
         }
         count += `<div class="cell_sprint_tot" id="cell_sprint_tot${j}" ></div>`
     };
@@ -450,7 +450,7 @@ document.addEventListener("contextmenu", (e) => {
     }
     else {
 
-        e.preventDefault();
+        //e.preventDefault();
         let _card;
         let _card_id;
         let data = {}
@@ -549,9 +549,18 @@ document.addEventListener("contextmenu", (e) => {
 
 document.addEventListener('dblclick', (e) => {
     if (e.target.className === 'card1') {
+        if(e.pageX+450 > window.innerWidth){
+            e.target.childNodes[1].style.left = (e.pageX -450) + 'px';
+        }
 
         e.target.childNodes[1].style.display = 'grid';
     };
+})
+
+document.addEventListener('keydown',(e)=>{
+    if(e.key == "Escape") {
+       _close();
+    }
 })
 document.addEventListener('click', (e) => {
     if (e.target.className === 'cell') {
@@ -767,7 +776,7 @@ function report_workDays() {
             for (let k = 0; k < data.sprint; k++) {
 
                 for (let i = 0; i < data.matrix.length; i++) {
-                    if (data.matrix[i].cell == 'cell' + j + k) {
+                    if (data.matrix[i].cell == 'cell_'  + j + '_' + k) {
                         a += (new Date(data.matrix[i].endPlanTask) - new Date(data.matrix[i].startPlanTask)) / (1000 * 3600 * 24);
                     }
                     
@@ -785,7 +794,7 @@ function report_workDays() {
 
                 //count += `<div class="cell_sprint" >СПРИНТ ${j} </div>`
                 for (let i = 0; i < data.matrix.length; i++) {
-                    if (data.matrix[i].cell == 'cell' + k + j) {
+                    if (data.matrix[i].cell == 'cell_' + k + '_' + j) {
                         b += (new Date(data.matrix[i].endPlanTask) - new Date(data.matrix[i].startPlanTask)) / (1000 * 3600 * 24);
                     }
                 };
@@ -803,7 +812,7 @@ function report_workDays() {
 
                 //count += `<div class="cell_sprint" >СПРИНТ ${j} </div>`
                 for (let i = 0; i < data.matrix.length; i++) {
-                    if (data.matrix[i].cell == 'cell' + k + j) {
+                    if (data.matrix[i].cell == 'cell_' + k + '_' + j) {
                         c += (new Date(data.matrix[i].endPlanTask) - new Date(data.matrix[i].startPlanTask)) / (1000 * 3600 * 24);
                     }
                 };

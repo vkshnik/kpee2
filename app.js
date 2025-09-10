@@ -139,9 +139,11 @@ app.get('/', function (req, res, next) {
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 
         <li><input class="dropdown-item" id="555" type="button" onclick="createFile()" value="Создать проект"></li>
-        <li><input class="dropdown-item" id="666" type="button" onclick="uploadFile()" value="Сохранить проект"> </li>
-        <li><label for="777" class="dropdown-item" hidden >Открыть проект</label><input class="form-control" id="777"
-            type="file" onclick="openFile1()" accept=".smeta" hidden></li>
+        <li><input class="dropdown-item" id="666" type="button" onclick="uploadFile()" value="Сохранить проект в БД"> </li>
+        <hr>
+        <li><label for="777" class="dropdown-item" >Открыть проект из файла</label><input class="form-control" id="777"
+            type="file" onclick="openLocalFile()" accept=".kpee" hidden ></li>
+        <li><input class="dropdown-item" id="666" type="button" onclick="saveLocalFile()" value="Сохранить проект в файл"> </li>
       </ul>
     </div>`,
       report: `

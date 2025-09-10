@@ -1,3 +1,105 @@
+//////////////////////////SAVE TO////////////////////
+
+function savetoWord_1p() {
+    let fn;
+
+    fn = prompt('Введите название файла');
+    if (fn == null) {
+        return;
+    }
+
+    let file = new Blob([document.getElementById('smeta_1p').innerHTML], { type: 'application/msword;charset=utf-8,' });
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, fn);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = fn;
+        a.pathname;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+    }
+}
+function savetoExcel_1p() {
+    let fn;
+
+    fn = prompt('Введите название файла');
+    if (fn == null) {
+        return;
+    }
+
+    let file = new Blob([document.getElementById('smeta_1p').innerHTML], { type: 'application/vnd.ms-excel;charset=utf-8,' });
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, fn);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = fn;
+        a.pathname;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+    }
+}
+
+/* function savetoPdf() {
+    let fn;
+
+    fn = prompt('Введите название файла') ;
+    if (fn == null ) {
+        return;
+    }
+
+    let file = new Blob([document.getElementById('smeta').innerHTML], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document  docx;charset=utf-8'  });
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, fn);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = fn;
+        a.pathname;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+    }
+} */
+
+function savetopdf() {
+    /*let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+
+    mywindow.document.write(`<html><head><title></title>`);
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(document.getElementsByClassName('report')[0].innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); 
+    mywindow.focus(); 
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;*/
+    
+let n = sessionStorage.getItem('tabs')
+var wb = XLSX.utils.table_to_book(document.getElementById('tablexls'));
+wb.cellStyles = 
+  /* Export to file (start a download) */
+  XLSX.writeFile(wb, `${n }Отчет по задачам.xlsx`, {/* ...opts , */ cellStyles: true});
+
+}
+
+
+////////////////////////////////////////////////////
 
 
 function report_task() {
@@ -14,6 +116,7 @@ function report_task() {
         <td>${data.matrix[i].id}</td>
         <td>${data.matrix[i].doer}</td>
         <td>${data.matrix[i].name}</td>
+        <td>${data.matrix[i].description}</td>
         <td>${data.matrix[i].startPlanTask}</td>
         <td>${data.matrix[i].startFactTask}</td>
         <td>${data.matrix[i].endPlanTask}</td>
@@ -30,16 +133,18 @@ function report_task() {
 
     bodyReport.innerHTML = `
     <button  class= "report_close" onclick = "report_close()">&#x2715</button>
+    <button  class= "report_btn" onclick = "savetopdf()">PDF</button>
     <h3 style="text-align: center;">ОТЧЕТ ПО ВЫПОЛНЕНИЮ ЗАДАЧ ПО ПРОЕКТУ</h3>
     <h3>Наименование проекта: ${data.name}</h3>
     <h6>Стадия проектирования: ${data.stadia}</h6>
     <h6>Главный инженер проекта: ${data.author}</h6>
     <br>
-    <table>
+    <table id = 'tablexls'>
     <tr>
     <th rowspan=2>Номер задачи</th>
     <th rowspan=2>Исполнитель</th>
     <th rowspan=2>Наименование задачи</th>
+    <th rowspan=2>Описание задачи</th>
     <th colspan=2>Дата начала</th>
     <th colspan=2>Дата окончания</th>
     <th colspan=2>Срок выполнения (дни) </th>
@@ -194,9 +299,8 @@ function report_total() {
         /* START INSERT FOOTER*/
         footer = '';
         if (arr.length === 0) {
-            footer = `<tr style="background-color: lightgreen;">
-            <td colspan=2 >Итого по дисциплине</td>
-            <td>-</td>
+            footer = `<tr style="background-color: lightblue;">
+            <td colspan=3 >Итого по дисциплине</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
@@ -228,10 +332,9 @@ function report_total() {
                     }
                 }
             }
-            footer = `<tr style="background-color: lightgreen;">
-            <td colspan=2 >Итого по дисциплине</td>
+            footer = `<tr style="background-color: lightblue;">
+            <td colspan=3 >Итого по дисциплине</td>
            
-            <td>-</td>
             <td>${sum_days_plan}</td>
             <td>${sum_days_fact}</td>
             <td>${Math.ceil(fot_plan)}</td>
@@ -301,7 +404,7 @@ function report_total() {
             fot_fact += (new Date(data.matrix[j].endFactTask) - new Date(data.matrix[j].startFactTask)) / (1000 * 3600 * 24) * data.matrix[j].salary / 21
         }
 
-        total = `<tr style='background-color:lightgrey'>
+        total = `<tr style='background-color:lightblue'>
                 <td colspan=2>Итого по проекту</td>
                 <td>-</td>
                 <td>${sum_days_plan}</td>
@@ -593,7 +696,7 @@ function report_total_all_detail() {
             fot_fact += (new Date(data.matrix[j].endFactTask) - new Date(data.matrix[j].startFactTask)) / (1000 * 3600 * 24) * data.matrix[j].salary / 21
         }
 
-        total = `<tr style='background-color:lightgrey'>
+        total = `<tr style='background-color:lightblue'>
                 <th colspan=2>Итого по проекту</th>
                 <th>-</th>
                 <th>${sum_days_plan}</th>
@@ -620,11 +723,9 @@ function report_total_all_detail() {
     }
     /* END INSERT TOTAL*/
     let bodyReport = document.createElement('div');
-    let modal5 = document.createElement('div');
-    bodyReport.setAttribute('class', 'bodyReport');
-    modal5.setAttribute('class', 'report');
+    bodyReport.setAttribute('class', 'report');
 
-    modal5.innerHTML = `
+    bodyReport.innerHTML = `
     <button   class= "report_close" onclick = "report_close()">&#x2715</button>
     <h3 style="text-align: center;">ОТЧЕТ ПО ПРОЕКТУ</h3>
     <h3>Наименование проекта:  ${data.name}</h3>
@@ -636,7 +737,6 @@ function report_total_all_detail() {
     ${context}
     ${total}
     </table>`
-    bodyReport.appendChild(modal5);
     document.getElementById('reports').appendChild(bodyReport);
 
 }
@@ -859,16 +959,16 @@ function report_total_all() {
                     }
                 }
                 a += `<td>${sum_plan}</td><td>${sum_fact}</td>`;
-                    a1 += `<td >${(sum_plan * 100 / workDays[k][j] / count).toFixed(0)}%</td>
+                a1 += `<td >${(sum_plan * 100 / workDays[k][j] / count).toFixed(0)}%</td>
                 <td >${(sum_fact * 100 / workDays[k][j] / count).toFixed(0)}%</td>`;
 
-/////////////////////////////
+                /////////////////////////////
             }
         }
 
 
 
-        footer = `<tr style="background-color: lightgrey;">
+        footer = `<tr style="background-color: lightblue;">
             <td >ИТОГО<br>по отделу</td>
             <td>${sum_days_plan2}</td>
             <td>${sum_days_fact2}</td>
@@ -926,8 +1026,8 @@ function report_total_all() {
             }
             total2 += `<td>${sum_plan}</td><td>${sum_fact}</td>`;
 
-                total21 += `<td >${(sum_plan * 100 / workDays[k][j] / doers.length).toFixed(0)}%</td>
-                <td >${(sum_fact * 100 / workDays[k][j] / doers.length ).toFixed(0)}%</td>`;
+            total21 += `<td >${(sum_plan * 100 / workDays[k][j] / doers.length).toFixed(0)}%</td>
+                <td >${(sum_fact * 100 / workDays[k][j] / doers.length).toFixed(0)}%</td>`;
 
 
         }
@@ -970,6 +1070,7 @@ function report_total_all() {
 function report_close() {
 
     document.getElementById('reports').addEventListener('click', (e) => {
+
         if (e.target.className == 'report_close') {
             document.getElementById('reports').removeChild(e.target.parentElement);
         }
@@ -1007,7 +1108,6 @@ function changeTab() {
         }
         else tabs[key].checked = false;
     }
-
 
     document.addEventListener('click', (e) => {
         if (e.target.className === "chooseFile") {
