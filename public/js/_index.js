@@ -149,16 +149,15 @@ function changeTab() {
                 }
                 else tabs[key].checked = false;
             }
-            //for (key in tabs) tabs[key].checked = false
-            //e.target.checked = true
             sessionStorage.setItem('tabs', JSON.stringify(e.target.id));
 
-            //let name_file = JSON.parse(sessionStorage.getItem('tabs'));
-            let data = JSON.parse(localStorage.getItem(e.target.id));
-            let a = sessionStorage.getItem('tabs');
+            let data;
             if (!data) {
-                return
+                window.location.reload();
             }
+            data = JSON.parse(localStorage.getItem(e.target.id));
+            let a = sessionStorage.getItem('tabs');
+
 
             document.getElementById('_nameProject').innerHTML = data.name;
             document.getElementById('_start').innerHTML = data.countStart;
@@ -172,7 +171,6 @@ function changeTab() {
             fill_card();
             report_workDays()
         }
-
     })
 
 
@@ -197,9 +195,7 @@ function openLocalFile() {
         }
 
         let reader = new FileReader();
-
         reader.readAsText(document.getElementById('777').files[0]);
-
         reader.onload = () => {
             if (reader.result.includes("stadia")) {
                 localStorage.setItem(document.getElementById('777').files[0].name, reader.result)
@@ -209,11 +205,7 @@ function openLocalFile() {
                 return
             }
         }
-
         window.location.reload();
-
-
-
     })
 }
 
@@ -238,7 +230,7 @@ class Card {
         this._card.innerHTML = id;
 
         //this._card.setAttribute('data-bs-toggle', 'popover');
-        //this._card.setAttribute('title', 'Карточка задачи');
+        //this._card.setAttribute('title', 'Карточка задачи \n uhuhu');
         //this._card.setAttribute('data-bs-content', '///');
         /*CARD STYLE*/
         this._card.draggable = true;
@@ -269,13 +261,13 @@ class Card {
             </div>
             <div class="duration">
             <label for='startPlanTask${id}'>Плановая дата начала</label>
-            <input id='startPlanTask${id}' type='date' value="2025-01-01">
+            <input id='startPlanTask${id}' type='date' value=${data.countStart}>
             <label for='endPlanTask${id}'>Плановая дата окончания</label>
-            <input id='endPlanTask${id}' type='date' value="2025-01-02">
+            <input id='endPlanTask${id}' type='date' value=${data.countStart}>
             <label for='startFactTask${id}'>Фактическая дата начала</label>
-            <input id='startFactTask${id}' type='date' value="2025-01-01">
+            <input id='startFactTask${id}' type='date' value=${data.countStart}>
             <label for='endFactTask${id}'>Фактическая дата окончания</label>
-            <input id='endFactTask${id}' type='date' value="2025-01-02">
+            <input id='endFactTask${id}' type='date' value=${data.countStart}>
             </div>
             <div class="isDone">
             <label for='isDone${id}'>Задача выполнена</label>
@@ -549,17 +541,17 @@ document.addEventListener("contextmenu", (e) => {
 
 document.addEventListener('dblclick', (e) => {
     if (e.target.className === 'card1') {
-        if(e.pageX+450 > window.innerWidth){
-            e.target.childNodes[1].style.left = (e.pageX -450) + 'px';
+        if (e.pageX + 450 > window.innerWidth) {
+            e.target.childNodes[1].style.left = (e.pageX - 450) + 'px';
         }
 
         e.target.childNodes[1].style.display = 'grid';
     };
 })
 
-document.addEventListener('keydown',(e)=>{
-    if(e.key == "Escape") {
-       _close();
+document.addEventListener('keydown', (e) => {
+    if (e.key == "Escape") {
+        _close();
     }
 })
 document.addEventListener('click', (e) => {
@@ -776,12 +768,12 @@ function report_workDays() {
             for (let k = 0; k < data.sprint; k++) {
 
                 for (let i = 0; i < data.matrix.length; i++) {
-                    if (data.matrix[i].cell == 'cell_'  + j + '_' + k) {
+                    if (data.matrix[i].cell == 'cell_' + j + '_' + k) {
                         a += (new Date(data.matrix[i].endPlanTask) - new Date(data.matrix[i].startPlanTask)) / (1000 * 3600 * 24);
                     }
-                    
+
                 };
-               
+
             };
             document.getElementById(`cell_total${j}`).innerHTML = a
         };
@@ -821,7 +813,7 @@ function report_workDays() {
 
 
         };
-        document.getElementById(`cell_total${Number(stadia.length-1)}`).innerHTML = c;
+        document.getElementById(`cell_total${Number(stadia.length - 1)}`).innerHTML = c;
     }
 
 }
