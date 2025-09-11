@@ -74,7 +74,7 @@ function savetoExcel_1p() {
     }
 } */
 
-function savetopdf() {
+function savetoXlsx() {
     /*let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
 
     mywindow.document.write(`<html><head><title></title>`);
@@ -92,9 +92,9 @@ function savetopdf() {
     
 let n = sessionStorage.getItem('tabs')
 var wb = XLSX.utils.table_to_book(document.getElementById('tablexls'));
-wb.cellStyles = 
+
   /* Export to file (start a download) */
-  XLSX.writeFile(wb, `${n }Отчет по задачам.xlsx`, {/* ...opts , */ cellStyles: true});
+  XLSX.writeFile(wb, `${n }Отчет по задачам.xlsx`, {/* ...opts , */  cellStyles: true});
 
 }
 
@@ -133,7 +133,7 @@ function report_task() {
 
     bodyReport.innerHTML = `
     <button  class= "report_close" onclick = "report_close()">&#x2715</button>
-    <button  class= "report_btn" onclick = "savetopdf()">PDF</button>
+    <button  class= "report_btn" onclick = "savetoXlsx()"><img src = '/xlsx.svg' ></button>
     <h3 style="text-align: center;">ОТЧЕТ ПО ВЫПОЛНЕНИЮ ЗАДАЧ ПО ПРОЕКТУ</h3>
     <h3>Наименование проекта: ${data.name}</h3>
     <h6>Стадия проектирования: ${data.stadia}</h6>

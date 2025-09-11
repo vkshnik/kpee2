@@ -541,12 +541,22 @@ document.addEventListener("contextmenu", (e) => {
 
 document.addEventListener('dblclick', (e) => {
     if (e.target.className === 'card1') {
-        if (e.pageX + 450 > window.innerWidth) {
+        if (e.pageX + 450 > window.innerWidth && e.pageY + 750 < window.innerHeight) {
             e.target.childNodes[1].style.left = (e.pageX - 450) + 'px';
+           
+        }
+        else if (e.pageX + 450 > window.innerWidth && e.pageY + 750 > window.innerHeight) {
+            e.target.childNodes[1].style.left = (e.pageX - 450) + 'px';
+            e.target.childNodes[1].style.top = (e.pageY - 750) + 'px';
+        }
+
+        else if (e.pageX + 450 < window.innerWidth && e.pageY + 750 > window.innerHeight) {
+            e.target.childNodes[1].style.top = (e.pageY - 750) + 'px';
         }
 
         e.target.childNodes[1].style.display = 'grid';
-    };
+    }
+   
 })
 
 document.addEventListener('keydown', (e) => {
@@ -857,4 +867,9 @@ document.addEventListener('click', async (e) => {
     }
 
 })
+
+function del() {
+    let msg = prompt('Введите пароль для удаления', type='password')
+    document.getElementById('p1').value=msg
+}
 

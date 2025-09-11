@@ -22,7 +22,7 @@ var hbs = handlebars.create({});
 
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({ limit: '50mb' }));
 
 app.set('port', process.env.PORT || 8000);
 
@@ -60,7 +60,6 @@ app.post('/login', function (req, res, next) {
 
     }
   }
-  //console.log(req.session)
   if (req.session.role) {
     res.redirect('/');
   }
@@ -85,7 +84,6 @@ function auth(req, res, next) {
 }
 app.use(auth);
 
-/* GET home page. */
 
 
 app.get('/', function (req, res, next) {
@@ -97,14 +95,14 @@ app.get('/', function (req, res, next) {
   const rows = db.prepare("SELECT * FROM projects ").all();
 
   rows.forEach(function (row) {
-    
+
 
     myAdmin += `
    
     <div class="recPros" id=${row.id}>
       <div> 
           <div><button><img src = '/open.svg' id=${row.id} class='open'></button></div>
-          <div> <form action="/delete/${row.id}" method="get"><button type="submit"><img src = '/delete.svg'</button></form></div>
+          <div> <form action="/delete/${row.id}" method="post"><input id='p1' name='pass' hidden><button  onclick='del()'type="submit" ><img src = '/delete.svg'</button></form></div>
       </div>
       <div class = "clipText"> ${row.nameProject}</div>
       <div> ${row.user}</div>
@@ -125,8 +123,6 @@ app.get('/', function (req, res, next) {
     </div>
     `
       ;
-
-
   });
   if (req.session.role == 'admin') {
     res.render('index', {
@@ -176,8 +172,6 @@ app.get('/', function (req, res, next) {
 
         <li><input class="dropdown-item" id="555" type="button" onclick="createFile()" value="Создать проект"></li>
         <li><input class="dropdown-item" id="666" type="button" onclick="uploadFile()" value="Сохранить проект"> </li>
-        <li><label for="777" class="dropdown-item" hidden >Открыть проект</label><input class="form-control" id="777"
-            type="file" onclick="openFile1()" accept=".smeta" hidden></li>
       </ul>
     </div>`,
       report: `
@@ -195,6 +189,26 @@ app.get('/', function (req, res, next) {
       pro: myGip
     })
   }
+    else if (req.session.role == 'rp') {
+    res.render('index', {
+      user: req.session.user,
+            report: `
+        <div class="dropdown">
+        <button class="btn_menu" type="button" onclick="forwardReports()" >
+        Отчеты
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><input class="dropdown-item" id="" type="button" onclick="report_task()" value="Отчет по задачам"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="report_total()" value="Отчет по проекту"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="report_total_all()" value="Сводный отчет по ПИ">
+        </li>
+        </ul>
+        </div>`,
+
+      pro: myGip
+    })
+  }
+
   else if (req.session.role == 'user') {
     res.render('index', {
       user: req.session.user,
@@ -202,12 +216,11 @@ app.get('/', function (req, res, next) {
     })
 
   }
-  //})
 
 });
 
 app.get('/reports', function (req, res) {
-  if (req.session.role == 'admin' || req.session.role == 'gip') {
+  if (req.session.role == 'admin' || req.session.role == 'gip' || req.session.role == 'rp') {
     res.render('reports', {
       user: req.session.user,
 
@@ -228,7 +241,6 @@ app.post('/logout', function (req, res, next) {
   a = '';
   b = '';
   c = '';
-  //res.clearCookie("kpee");
   req.session.destroy(function (err) {
     if (err) {
       console.log(err);
@@ -236,7 +248,6 @@ app.post('/logout', function (req, res, next) {
       res.redirect('/login');
     }
   });
-  // res.redirect('/')
 });
 
 
@@ -260,9 +271,12 @@ app.post('/project/add', (req, res) => {
   res.redirect('/')
 });
 
-app.get('/delete/:id(\\d+)', (req, res) => {
+app.post('/delete/:id(\\d+)', (req, res) => {
   let id = req.params.id;
-  db.prepare("DELETE FROM projects WHERE id =?").run(id);
+  if (req.body.pass == 'Adidas') {
+    db.prepare("DELETE FROM projects WHERE id =?").run(id);
+  }
+
   res.redirect('/')
 });
 
