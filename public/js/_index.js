@@ -9,7 +9,7 @@ function createTab() {
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.key(i).includes('.kpee')) {
             l += `<div class ="pag"><input type="checkbox" class = "chooseFile" id = "${localStorage.key(i)}" value = "${localStorage.key(i)}" >
-        <label class ="pag2"  for="${localStorage.key(i)}">${localStorage.key(i)}</label>
+        <label class ="pag2" title= "${localStorage.key(i)}" for="${localStorage.key(i)}">${localStorage.key(i)}</label>
         <input type="button" class = "btnclose" onclick = "closeFile()"  value="&#x2715" ></div>`
         }
     }
@@ -442,7 +442,7 @@ document.addEventListener("contextmenu", (e) => {
     }
     else {
 
-        e.preventDefault();
+        //e.preventDefault();
         let _card;
         let _card_id;
         let data = {}
@@ -541,22 +541,13 @@ document.addEventListener("contextmenu", (e) => {
 
 document.addEventListener('dblclick', (e) => {
     if (e.target.className === 'card1') {
-        if (e.pageX + 450 > window.innerWidth && e.pageY + 750 < window.innerHeight) {
+        if (e.pageX + 450 > window.innerWidth) {
             e.target.childNodes[1].style.left = (e.pageX - 450) + 'px';
-           
-        }
-        else if (e.pageX + 450 > window.innerWidth && e.pageY + 750 > window.innerHeight) {
-            e.target.childNodes[1].style.left = (e.pageX - 450) + 'px';
-            e.target.childNodes[1].style.top = (e.pageY - 750) + 'px';
-        }
 
-        else if (e.pageX + 450 < window.innerWidth && e.pageY + 750 > window.innerHeight) {
-            e.target.childNodes[1].style.top = (e.pageY - 750) + 'px';
         }
-
         e.target.childNodes[1].style.display = 'grid';
     }
-   
+
 })
 
 document.addEventListener('keydown', (e) => {
@@ -756,6 +747,9 @@ window.addEventListener('load', () => {
 function forwardReports() {
     window.location.href = "/reports";
 }
+function forwardAdminPanel() {
+    window.location.href = "/adminPanel";
+}
 
 function report_workDays() {
     if (document.querySelectorAll('input[type="checkbox"]:checked[class="chooseFile"]')[0] == undefined) {
@@ -865,11 +859,22 @@ document.addEventListener('click', async (e) => {
         window.location.reload();
 
     }
+    else if (e.target.className == 'delete') {
+        let msg = prompt('Введите пароль для удаления')
+        let id = e.target.id;
+        let response = await fetch(`/delete/${id}`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ pass: msg })
+        });
+
+
+        window.location.reload();
+    }
 
 })
 
-function del() {
-    let msg = prompt('Введите пароль для удаления', type='password')
-    document.getElementById('p1').value=msg
-}
+
 

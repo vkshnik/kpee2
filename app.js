@@ -12,6 +12,7 @@ var fs = require('fs');
 var us = require('./users');
 var handlebars = require('express-handlebars');
 const { isArray } = require('util');
+const USERS = require('./users');
 
 app.engine('.hbs', handlebars.engine({ extname: '.hbs' }));
 
@@ -96,15 +97,16 @@ app.get('/', function (req, res, next) {
 
   rows.forEach(function (row) {
 
+    //          <div> <form action="/delete/${row.id}" method="post"><input id="p1" name="pass" ><button   type="submit" ><img src = '/delete.svg'class = "delete"></button></form></div>
 
     myAdmin += `
    
     <div class="recPros" id=${row.id}>
       <div> 
           <div><button><img src = '/open.svg' id=${row.id} class='open'></button></div>
-          <div> <form action="/delete/${row.id}" method="post"><input id='p1' name='pass' hidden><button  onclick='del()'type="submit" ><img src = '/delete.svg'</button></form></div>
+          <div><button><img src = '/delete.svg' class = "delete" id=${row.id}></button></div>
       </div>
-      <div class = "clipText"> ${row.nameProject}</div>
+      <div class = "clipText" title= "${row.nameProject}"> ${row.nameProject}</div>
       <div> ${row.user}</div>
       <div> ${new Date(row.dateProject).toLocaleDateString('ru')} <br> ${new Date(row.dateProject).toLocaleTimeString('ru')}</div>
       
@@ -116,7 +118,7 @@ app.get('/', function (req, res, next) {
       <div>
           <div><button><img src = '/open.svg' id=${row.id} class='open'></button></div>
       </div>
-      <div class = "clipText"> ${row.nameProject}</div>
+      <div class = "clipText" title= "${row.nameProject}"> ${row.nameProject}</div>
       <div> ${row.user}</div>
       <div> ${new Date(row.dateProject).toLocaleDateString('ru')} <br> ${new Date(row.dateProject).toLocaleTimeString('ru')}</div>
       
@@ -124,7 +126,7 @@ app.get('/', function (req, res, next) {
     `
       ;
   });
-  if (req.session.role == 'admin') {
+  if (req.session.role == 'owner') {
     res.render('index', {
       user: req.session.user,
       projects: `
@@ -154,12 +156,54 @@ app.get('/', function (req, res, next) {
         </li>
         </ul>
         </div>`,
+      adminPanel: `
+        <div class="dropdown">
+        <button class="btn_menu" type="button" onclick="forwardAdminPanel()" >
+        Админка
+        </button>
+        </div>`,
+      pro: myAdmin,
 
+
+
+    });
+  }
+  else if (req.session.role == 'admin') {
+    res.render('index', {
+      user: req.session.user,
+      projects: `
+        <div class="dropdown">
+      <button class="btn_menu" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Проекты
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+        <li><input class="dropdown-item" id="555" type="button" onclick="createFile()" value="Создать проект"></li>
+        <li><input class="dropdown-item" id="666" type="button" onclick="uploadFile()" value="Сохранить проект в БД"> </li>
+        <hr>
+        <li><label for="777" class="dropdown-item" >Открыть проект из файла</label><input class="form-control" id="777"
+            type="file" onclick="openLocalFile()" accept=".kpee" hidden ></li>
+        <li><input class="dropdown-item" id="666" type="button" onclick="saveLocalFile()" value="Сохранить проект в файл"> </li>
+      </ul>
+    </div>`,
+      report: `
+        <div class="dropdown">
+        <button class="btn_menu" type="button" onclick="forwardReports()" >
+        Отчеты
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><input class="dropdown-item" id="" type="button" onclick="report_task()" value="Отчет по задачам"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="report_total()" value="Отчет по проекту"></li>
+        <li><input class="dropdown-item" id="" type="button" onclick="report_total_all()" value="Сводный отчет по ПИ">
+        </li>
+        </ul>
+        </div>`,
       pro: myAdmin,
 
 
     });
   }
+
   else if (req.session.role == 'gip') {
     res.render('index', {
       user: req.session.user,
@@ -189,10 +233,10 @@ app.get('/', function (req, res, next) {
       pro: myGip
     })
   }
-    else if (req.session.role == 'rp') {
+  else if (req.session.role == 'rp') {
     res.render('index', {
       user: req.session.user,
-            report: `
+      report: `
         <div class="dropdown">
         <button class="btn_menu" type="button" onclick="forwardReports()" >
         Отчеты
@@ -220,7 +264,7 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/reports', function (req, res) {
-  if (req.session.role == 'admin' || req.session.role == 'gip' || req.session.role == 'rp') {
+  if (req.session.role == 'admin' || req.session.role == 'gip' || req.session.role == 'rp' || req.session.role == 'owner') {
     res.render('reports', {
       user: req.session.user,
 
@@ -231,6 +275,32 @@ app.get('/reports', function (req, res) {
   }
 });
 
+app.get('/adminPanel', function (req, res) {
+
+  let u ='';
+  for (let i=0; i < us.length; i++) {
+   
+    u += `
+    
+    <tr>
+      <td><input value=${us[i].username}></td>
+      <td><input value=${us[i].password}></td>
+      <td><input value=${us[i].role}></td>
+    </tr>
+    `
+
+  }
+  //console.log(us)
+  if (req.session.role == 'owner') {
+    res.render('adminPanel', {
+      user: req.session.user,
+      allUser: u,
+    });
+  }
+  else {
+    res.redirect('/')
+  }
+});
 
 app.post('/', function (req, res, next) {
   res.render('index', {
@@ -273,7 +343,7 @@ app.post('/project/add', (req, res) => {
 
 app.post('/delete/:id(\\d+)', (req, res) => {
   let id = req.params.id;
-  if (req.body.pass == 'Adidas') {
+  if (req.body.pass == req.session.pass) {
     db.prepare("DELETE FROM projects WHERE id =?").run(id);
   }
 

@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    
 
 
 }
@@ -9,11 +10,6 @@ body {
     grid-template-areas:
         "header"
         "content";
-
-
-
-
-
 
 }
 
@@ -72,4 +68,29 @@ body {
 
 .banner {
     width: 100%;
+}
+
+.a table {
+    border-collapse: collapse;
+    background-color: white;
+        
+}
+
+.a table tr th {
+    border: 1px solid;
+    padding: 10px;
+    font-size: 10pt;
+    width: 100px;
+    text-align: center;
+    background-color: lightblue;
+
+}
+
+.a table tr td {
+    border: 1px solid;
+    padding: 10px;
+    font-size: 10pt;
+    width: 100px;
+    text-align: center;
+
 }

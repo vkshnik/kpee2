@@ -1087,8 +1087,8 @@ function createTab() {
 
     for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.key(i).includes('.kpee')) {
-            l += `<div class ="pag"><input type="checkbox" class = "chooseFile" id = "${localStorage.key(i)}" value = "${localStorage.key(i)}" >
-        <label for="${localStorage.key(i)}">${localStorage.key(i)}</label>
+            l += `<div class ="pag" ><input type="checkbox"  class = "chooseFile" id = "${localStorage.key(i)}" value = "${localStorage.key(i)}" >
+        <label class ="pag2"  title= "${localStorage.key(i)}" for="${localStorage.key(i)}">${localStorage.key(i)}</label>
         <input type="button" class = "btnclose" onclick = "closeFile()"  value="&#x2715" ></div>`
         }
     }
