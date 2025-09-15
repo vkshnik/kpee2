@@ -1,6 +1,6 @@
 html {
     height: 100%;
-    
+
 
 
 }
@@ -70,10 +70,15 @@ body {
     width: 100%;
 }
 
+.a h1 {
+    color: blue;
+    text-align: center;
+}
+
 .a table {
     border-collapse: collapse;
     background-color: white;
-        
+    margin: 0 auto;
 }
 
 .a table tr th {

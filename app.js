@@ -9,10 +9,12 @@ const sess = new Database("sessions.db" /*,  {  verbose : console . log  } */);
 
 const db = new Database('projects.db');
 var fs = require('fs');
-var us = require('./users');
+
+var us = JSON.parse(fs.readFileSync("users1.json"))
+//var us = require('./users');
 var handlebars = require('express-handlebars');
 const { isArray } = require('util');
-const USERS = require('./users');
+
 
 app.engine('.hbs', handlebars.engine({ extname: '.hbs' }));
 
@@ -283,14 +285,15 @@ app.get('/adminPanel', function (req, res) {
     u += `
     
     <tr>
-      <td><input value=${us[i].username}></td>
-      <td><input value=${us[i].password}></td>
-      <td><input value=${us[i].role}></td>
+      <td><input id = "user${[i]}" name = "username${[i]}" value=${us[i].username}></td>
+      <td><input id = "pass${[i]}" name = "password${[i]}" value=${us[i].password}></td>
+      <td><input id = "role${[i]}" name = "role${[i]}" value=${us[i].role}></td>
+      <td><button class = "a btn">&#9989;</button></td>
     </tr>
     `
 
   }
-  //console.log(us)
+  
   if (req.session.role == 'owner') {
     res.render('adminPanel', {
       user: req.session.user,
@@ -301,6 +304,17 @@ app.get('/adminPanel', function (req, res) {
     res.redirect('/')
   }
 });
+
+app.post('/adminPanel', function (req, res, next) {
+  let newUSERS = JSON.stringify(req.body);
+  fs.writeFileSync("users1.json",newUSERS)
+  console.log(us)
+  
+  res.render('adminPanel', {
+  })
+});
+
+
 
 app.post('/', function (req, res, next) {
   res.render('index', {
